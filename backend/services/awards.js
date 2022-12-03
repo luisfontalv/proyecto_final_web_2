@@ -1,9 +1,21 @@
-const { Premio: awardModel, sequelize } = require("../models");
+const {
+  Premio: awardModel,
+  Deportista: playerModel,
+  sequelize,
+} = require("../models");
 
 class awardService {
   async getOne(id) {
     const award = await awardModel.findOne({
       where: { id, estado: 1 },
+      include: [
+        {
+          model: playerModel,
+          as: "deportista",
+          where: { estado: 1 },
+          required: false,
+        },
+      ],
     });
     return award;
   }
@@ -11,6 +23,14 @@ class awardService {
   async getAll(where) {
     const awards = await awardModel.findAll({
       where: { ...where, estado: 1 },
+      include: [
+        {
+          model: playerModel,
+          as: "deportista",
+          where: { estado: 1 },
+          required: false,
+        },
+      ],
     });
     return awards;
   }
