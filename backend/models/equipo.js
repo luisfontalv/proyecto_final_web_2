@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
         },
         nombre: { type: DataTypes.STRING(500), allowNull: false },
-        fecha_nacimiento: { type: DataTypes.DATE, allowNull: false },
   
         estado: { type: DataTypes.TINYINT(4), allowNull: false, defaultValue: 1 },
         vp_deporte: { type: DataTypes.BIGINT, allowNull: false },        

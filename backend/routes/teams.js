@@ -3,7 +3,7 @@ const express = require("express");
 
 const TeamsRouter = (app) => {
   const service = new TeamService();
-  const router = express.router();
+  const router = express.Router();  
   app.use("/team", router);
 
   router.get("/:id", async (req, res) => {

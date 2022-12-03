@@ -3,7 +3,7 @@ const express = require("express");
 
 const PlayersRouter = (app) => {
   const service = new PlayerService();
-  const router = express.router();
+  const router = express.Router();
   app.use("/player", router);
 
   router.get("/:id", async (req, res) => {

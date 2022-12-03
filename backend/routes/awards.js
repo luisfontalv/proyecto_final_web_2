@@ -3,7 +3,7 @@ const express = require("express");
 
 const AwardsRouter = (app) => {
   const service = new AwardService();
-  const router = express.router();
+  const router = express.Router();
   app.use("/award", router);
 
   router.get("/:id", async (req, res) => {

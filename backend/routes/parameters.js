@@ -3,7 +3,7 @@ const express = require("express");
 
 const ParametersRouter = (app) => {
   const service = new ParameterService();
-  const router = express.router();  
+  const router = express.Router();  
   app.use("/parameter", router);
 
   router.get("/:id", async (req, res) => {
