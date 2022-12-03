@@ -1,26 +1,26 @@
-const { Client: clientModel, sequelize } = require("../models/");
+const { Premio: parameterModel, sequelize } = require("../models");
 
-class clientService {
+class parameterService {
   async getOne(id) {
-    const client = await clientModel.findOne({
+    const parameter = await parameterModel.findOne({
       where: { id, state: 1 },
     });
-    return client;
+    return parameter;
   }
 
   async getAll(where) {
-    const clients = await clientModel.findAll({
+    const parameters = await parameterModel.findAll({
       where: { ...where, state: 1 },
     });
-    return clients;
+    return parameters;
   }
 
   async create(data) {
     const t = await sequelize.transaction();
     try {
-      const createdClient = await clientModel.create(data, { transaction: t });
+      const createdParameter = await parameterModel.create(data, { transaction: t });
       await t.commit();
-      return createdClient;
+      return createdParameter;
     } catch (e) {
       await t.rollback();
       return {
@@ -30,16 +30,16 @@ class clientService {
     }
   }
 
-  async update(data, clientId) {
+  async update(data, parameterId) {
     const t = await sequelize.transaction();
     try {
-      await clientModel.update(data, {
-        where: { id: clientId },
+      await parameterModel.update(data, {
+        where: { id: parameterId },
         transaction: t,
       });
       await t.commit();
-      const updatedClient = await clientModel.findByPk(clientId);
-      return updatedClient;
+      const updatedParameter = await parameterModel.findByPk(parameterId);
+      return updatedParameter;
     } catch (e) {
       await t.rollback();
       return {
@@ -49,25 +49,25 @@ class clientService {
     }
   }
 
-  async delete(clientId) {
+  async delete(parameterId) {
     const t = await sequelize.transaction();
-    const client = await this.getOne(clientId);
-    if (!client) {
+    const parameter = await this.getOne(parameterId);
+    if (!parameter) {
       return {
         status: 400,
-        message: "User Not Found",
+        message: "Parameter Not Found",
       };
     }
     try {
-      await clientModel.update(
+      await parameterModel.update(
         { state: -1 },
         {
-          where: { id: clientId },
+          where: { id: parameterId },
           transaction: t,
         }
       );
       await t.commit();
-      return clientId;
+      return parameterId;
     } catch (e) {
       await t.rollback();
       return {
@@ -78,4 +78,4 @@ class clientService {
   }
 }
 
-module.exports = clientService;
+module.exports = parameterService;
