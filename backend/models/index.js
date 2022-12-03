@@ -22,7 +22,7 @@ ValorParametro.belongsTo(Parametro, {
 });
 Parametro.hasMany(ValorParametro, {
   foreignKey: "id_parametros",
-  as: "valores_parametro",
+  as: "valoresParametro",
 });
 Premio.belongsTo(Deportista, {
   foreignKey: "id_deportistas",

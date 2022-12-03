@@ -3,14 +3,14 @@ const { Equipo: teamModel, sequelize } = require("../models");
 class teamService {
   async getOne(id) {
     const team = await teamModel.findOne({
-      where: { id, state: 1 },
+      where: { id, estado: 1 },
     });
     return team;
   }
 
   async getAll(where) {
     const teams = await teamModel.findAll({
-      where: { ...where, state: 1 },
+      where: { ...where, estado: 1 },
     });
     return teams;
   }
@@ -60,7 +60,7 @@ class teamService {
     }
     try {
       await teamModel.update(
-        { state: -1 },
+        { estado: -1 },
         {
           where: { id: teamId },
           transaction: t,

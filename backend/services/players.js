@@ -8,7 +8,7 @@ const {
 class playerService {
   async getOne(id) {
     const player = await playerModel.findOne({
-      where: { id, state: 1 },
+      where: { id, estado: 1 },
       include: [
         {
           model: awardModel,
@@ -29,7 +29,7 @@ class playerService {
 
   async getAll(where) {
     const players = await playerModel.findAll({
-      where: { ...where, state: 1 },
+      where: { ...where, estado: 1 },
       include: [
         {
           model: awardModel,
@@ -93,7 +93,7 @@ class playerService {
     }
     try {
       await playerModel.update(
-        { state: -1 },
+        { estado: -1 },
         {
           where: { id: playerId },
           transaction: t,

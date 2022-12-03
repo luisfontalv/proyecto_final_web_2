@@ -1,16 +1,36 @@
-const { Premio: parameterModel, sequelize } = require("../models");
+const {
+  Parametro: parameterModel,
+  ValorParametro: valueParameterModel,
+  sequelize,
+} = require("../models");
 
 class parameterService {
   async getOne(id) {
     const parameter = await parameterModel.findOne({
-      where: { id, state: 1 },
+      where: { id, estado: 1 },
+      include: [
+        {
+          model: valueParameterModel,
+          as: "valoresParametro",
+          where: { estado: 1 },
+          required: false,
+        },
+      ],
     });
     return parameter;
   }
 
   async getAll(where) {
     const parameters = await parameterModel.findAll({
-      where: { ...where, state: 1 },
+      where: { ...where, estado: 1 },
+      include: [
+        {
+          model: valueParameterModel,
+          as: "valoresParametro",
+          where: { estado: 1 },
+          required: false,
+        },
+      ],
     });
     return parameters;
   }
@@ -18,7 +38,9 @@ class parameterService {
   async create(data) {
     const t = await sequelize.transaction();
     try {
-      const createdParameter = await parameterModel.create(data, { transaction: t });
+      const createdParameter = await parameterModel.create(data, {
+        transaction: t,
+      });
       await t.commit();
       return createdParameter;
     } catch (e) {
@@ -60,7 +82,7 @@ class parameterService {
     }
     try {
       await parameterModel.update(
-        { state: -1 },
+        { estado: -1 },
         {
           where: { id: parameterId },
           transaction: t,

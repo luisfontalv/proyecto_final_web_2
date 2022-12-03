@@ -3,14 +3,14 @@ const { Premio: awardModel, sequelize } = require("../models");
 class awardService {
   async getOne(id) {
     const award = await awardModel.findOne({
-      where: { id, state: 1 },
+      where: { id, estado: 1 },
     });
     return award;
   }
 
   async getAll(where) {
     const awards = await awardModel.findAll({
-      where: { ...where, state: 1 },
+      where: { ...where, estado: 1 },
     });
     return awards;
   }
@@ -60,7 +60,7 @@ class awardService {
     }
     try {
       await awardModel.update(
-        { state: -1 },
+        { estado: -1 },
         {
           where: { id: awardId },
           transaction: t,
