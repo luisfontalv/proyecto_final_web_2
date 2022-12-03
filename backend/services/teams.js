@@ -1,26 +1,26 @@
-const { Client: clientModel, sequelize } = require("../models/");
+const { Equipo: teamModel, sequelize } = require("../models");
 
-class clientService {
+class teamService {
   async getOne(id) {
-    const client = await clientModel.findOne({
-      where: { id, state: 1 },
+    const team = await teamModel.findOne({
+      where: { id, estado: 1 },
     });
-    return client;
+    return team;
   }
 
   async getAll(where) {
-    const clients = await clientModel.findAll({
-      where: { ...where, state: 1 },
+    const teams = await teamModel.findAll({
+      where: { ...where, estado: 1 },
     });
-    return clients;
+    return teams;
   }
 
   async create(data) {
     const t = await sequelize.transaction();
     try {
-      const createdClient = await clientModel.create(data, { transaction: t });
+      const createdTeam = await teamModel.create(data, { transaction: t });
       await t.commit();
-      return createdClient;
+      return createdTeam;
     } catch (e) {
       await t.rollback();
       return {
@@ -30,16 +30,16 @@ class clientService {
     }
   }
 
-  async update(data, clientId) {
+  async update(data, teamId) {
     const t = await sequelize.transaction();
     try {
-      await clientModel.update(data, {
-        where: { id: clientId },
+      await teamModel.update(data, {
+        where: { id: teamId },
         transaction: t,
       });
       await t.commit();
-      const updatedClient = await clientModel.findByPk(clientId);
-      return updatedClient;
+      const updatedTeam = await teamModel.findByPk(teamId);
+      return updatedTeam;
     } catch (e) {
       await t.rollback();
       return {
@@ -49,25 +49,25 @@ class clientService {
     }
   }
 
-  async delete(clientId) {
+  async delete(teamId) {
     const t = await sequelize.transaction();
-    const client = await this.getOne(clientId);
-    if (!client) {
+    const team = await this.getOne(teamId);
+    if (!team) {
       return {
         status: 400,
-        message: "User Not Found",
+        message: "Team Not Found",
       };
     }
     try {
-      await clientModel.update(
-        { state: -1 },
+      await teamModel.update(
+        { estado: -1 },
         {
-          where: { id: clientId },
+          where: { id: teamId },
           transaction: t,
         }
       );
       await t.commit();
-      return clientId;
+      return teamId;
     } catch (e) {
       await t.rollback();
       return {
@@ -78,4 +78,4 @@ class clientService {
   }
 }
 
-module.exports = clientService;
+module.exports = teamService;
