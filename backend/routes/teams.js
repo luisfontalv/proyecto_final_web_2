@@ -3,7 +3,7 @@ const express = require("express");
 
 const TeamsRouter = (app) => {
   const service = new TeamService();
-  const router = express.Router();  
+  const router = express.Router();
   app.use("/team", router);
 
   router.get("/:id", async (req, res) => {
@@ -11,8 +11,9 @@ const TeamsRouter = (app) => {
     const team = await service.getOne(id);
     if (!team) {
       res.send({ status: 404, message: "Not found" });
+    } else {
+      res.send(team);
     }
-    res.send(team);
   });
 
   router.post("/getTeams", async (req, res) => {

@@ -11,8 +11,9 @@ const ParametersRouter = (app) => {
     const parameter = await service.getOne(id);
     if (!parameter) {
       res.send({ status: 404, message: "Not found" });
+    } else {
+      res.send(parameter);
     }
-    res.send(parameter);
   });
 
   router.post("/getParameters", async (req, res) => {

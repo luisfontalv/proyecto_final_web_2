@@ -11,8 +11,9 @@ const AwardsRouter = (app) => {
     const award = await service.getOne(id);
     if (!award) {
       res.send({ status: 404, message: "Not found" });
+    } else {
+      res.send(award);
     }
-    res.send(award);
   });
 
   router.post("/getAwards", async (req, res) => {
