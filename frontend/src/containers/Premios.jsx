@@ -24,9 +24,10 @@ const Premios = () => {
   }, []);
 
   const getAllPlayers = async () => {
-    const response = await api.post("/award/getPlayers", {});
+    const response = await api.post("/player/getPlayers", {});
     setPlayers(response.data);
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.nombre.trim() && `${form.vp_deporte}`.trim()) {
