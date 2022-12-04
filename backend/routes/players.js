@@ -11,8 +11,9 @@ const PlayersRouter = (app) => {
     const player = await service.getOne(id);
     if (!player) {
       res.send({ status: 404, message: "Not found" });
+    } else {
+      res.send(player);
     }
-    res.send(player);
   });
 
   router.post("/getPlayers", async (req, res) => {
